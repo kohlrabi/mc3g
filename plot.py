@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 from mc3g import plot
 
 
-vr = 0.8        # vaccine rate
-ve = 0.66       # UK data
+vr = 0.66       # vaccine rate
+ve = 0.66       # US CDC data
 p = 1e-2        # prevalence
 N = 200         # number of participants
 sens = 0.8      # test sensitivity
