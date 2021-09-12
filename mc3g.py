@@ -127,15 +127,15 @@ def plot(
 
     for i in range(3):
         if i == 0:
-            ax[i].hist(ev[i], bins=np.arange(ev[i].min()-4, ev[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'3G: {means[0]:.2f}');
-            ax[i].hist(ev2[i], bins=np.arange(ev2[i].min()-4, ev2[i].max()+4, 1, dtype=int ), density=True, align='left', histtype='step', label=f'Alle testen: {means[1]:.2f}');
-            ax[i].hist(ev3[i], bins=np.arange(ev3[i].min()-4, ev3[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'2G: {means[2]:.2f}');
-            ax[i].hist(ev4[i], bins=np.arange(ev3[i].min()-4, ev3[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'NoG: {means[3]:.2f}');
+            ax[i].hist(ev[i], bins=np.arange(ev[i].min()-4, ev[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'3G: {means[0]:.2f}', lw=1.5);
+            ax[i].hist(ev2[i], bins=np.arange(ev2[i].min()-4, ev2[i].max()+4, 1, dtype=int ), density=True, align='left', histtype='step', label=f'Alle testen: {means[1]:.2f}', lw=1.5);
+            ax[i].hist(ev3[i], bins=np.arange(ev3[i].min()-4, ev3[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'2G: {means[2]:.2f}', lw=1.5);
+            ax[i].hist(ev4[i], bins=np.arange(ev3[i].min()-4, ev3[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'NoG: {means[3]:.2f}', lw=1.5);
             ax[i].set_xlabel('Anzahl Infizierter im Innenraum')
             ax[i].set_ylabel('rel. Häufigkeit')
         else:
-            ax[i].hist(ev[i], bins=np.arange(ev[i].min()-4, ev[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'3G: {means_rej[(i-1)*2]:.2f}');
-            ax[i].hist(ev2[i], bins=np.arange(ev2[i].min()-4, ev2[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'Alle testen: {means_rej[(i-1)*2+1]:.2f}');
+            ax[i].hist(ev[i], bins=np.arange(ev[i].min()-4, ev[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'3G: {means_rej[(i-1)*2]:.2f}',lw=1.5);
+            ax[i].hist(ev2[i], bins=np.arange(ev2[i].min()-4, ev2[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'Alle testen: {means_rej[(i-1)*2+1]:.2f}', lw=1.5);
         ax[i].set_ylabel('rel. Häufigkeit')
         ax[i].legend()
 
