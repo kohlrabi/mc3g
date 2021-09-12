@@ -149,6 +149,8 @@ def plot(
 
 
     plt.tight_layout()
+    f.suptitle(f'{N:d} Personen, Prävalenz {p*100:.2f}%, \nImpfquote von {vr*100:.0f}%, Impfwirksamkeit von {ve*100:.0f}%')
+    f.subplots_adjust(top=0.88)
 
     return f
 
