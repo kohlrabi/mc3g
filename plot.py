@@ -14,7 +14,7 @@ spec = 0.97     # test specifity
 runs = 10_000   # number of Monte Carlo runs
 
 f = plot(vr, ve, p, N, sens, spec, runs)
-f.suptitle(f'{N:d} Personen, Prävalenz {p*100:.2f}%, \nImpfquote von {vr*100:.2f}%, Impfwirksamkeit von {ve*100:.2f}%')
+f.suptitle(f'{N:d} Personen, Prävalenz {p*100:.2f}%, \nImpfquote von {vr*100:.0f}%, Impfwirksamkeit von {ve*100:.0f}%')
 f.subplots_adjust(top=0.88)
 f.show()
 plt.show()
