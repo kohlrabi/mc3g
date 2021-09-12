@@ -99,12 +99,12 @@ def event(vax_rate : float = 0.8,
 
 
 
-def plot(vq=0.81, ve=0.66, p=1e-2, N=200):
+def plot(vq=0.81, ve=0.66, p=1e-2, N=200, sens=0.8, spec=0.97):
 
-    ev = event(vq, ve, p, 0.8, 0.97, False, True, N, 10_000)
-    ev2 = event(vq, ve, p, 0.8, 0.97, True, True, N, 10_000)
-    ev3 = event(1., ve, p, 0.8, 0.97, False, True, N, 10_000)
-    ev4 = event(vq, ve, p, 0.8, 0.97, False, False, N, 10_000)
+    ev = event(vq, ve, p, sens, spec, False, True, N, 10_000)
+    ev2 = event(vq, ve, p, sens, spec, True, True, N, 10_000)
+    ev3 = event(1., ve, p, sens, spec, False, True, N, 10_000)
+    ev4 = event(vq, ve, p, sens, spec, False, False, N, 10_000)
 
     f, ax = plt.subplots(3, 1, figsize=(10,10))
 
@@ -117,20 +117,20 @@ def plot(vq=0.81, ve=0.66, p=1e-2, N=200):
             ax[i].hist(ev2[i], bins=np.arange(ev2[i].min()-4, ev2[i].max()+4, 1, dtype=int ), density=True, align='left', histtype='step', label=f'Alle testen: {means[1]:.2f}');
             ax[i].hist(ev3[i], bins=np.arange(ev3[i].min()-4, ev3[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'2G: {means[2]:.2f}');
             ax[i].hist(ev4[i], bins=np.arange(ev3[i].min()-4, ev3[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'NoG: {means[3]:.2f}');
+            ax[i].set_xlabel('Anzahl Infizierter im Innenraum')
+            ax[i].set_ylabel('rel. Häufigkeit')
         else:
             ax[i].hist(ev[i], bins=np.arange(ev[i].min()-4, ev[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'3G: {means_rej[(i-1)*2]:.2f}');
             ax[i].hist(ev2[i], bins=np.arange(ev2[i].min()-4, ev2[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'Alle testen: {means_rej[(i-1)*2+1]:.2f}');
             #ax[i].hist(ev2[i], bins=np.arange(ev2[i].min()-4, ev2[i].max()+4, 1, dtype=int ), density=True, align='left', histtype='step', label=f'2G: {means[1]:.2f}');
             #ax[i].hist(ev3[i], bins=np.arange(ev3[i].min()-4, ev3[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'NoG: {means[2]:.2f}');
-        ax[i].set_xlabel('Anzahl Infizierter im Hörsaal')
-        ax[i].set_ylabel('rel. Häufigkeit')
         #ax[i].set_title(f'{N} Studenten im Hörsaal bei Prävalenz von {p*100}%')
         #ax[i].set_title(f'{N} Studenten im Hörsaal bei Prävalenz von {p*100}%')
         ax[i]
         ax[i].legend()
 
 
-    ax[0].set_title('Anzahl Infizierter im Hörsaal')
+    ax[0].set_title('Anzahl Infizierter im Innenraum')
     ax[1].set_title('Anzahl abgelehnter Infizierter')
     ax[2].set_title('Anzahl abgelehnter nicht-Infizierter')
 
