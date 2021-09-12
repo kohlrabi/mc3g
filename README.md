@@ -23,4 +23,12 @@ You can deactivate the virtualenv by typing
 
 
 ## Usage
-You can either edit and run `plot.py` to create plots, or you can run `streamlit run app.py` to create a small webserver and run an interactive session.
+In the virtualenv, you can either edit and run 
+
+    plot.py
+
+to create plots, or you can run 
+
+    streamlit run app.py
+
+to create a small webserver and run an interactive session.
