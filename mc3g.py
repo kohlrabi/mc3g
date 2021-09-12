@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import matplotlib
 import numba
 import numpy as np
+import typing as tp
+import numpy.typing as npt
 
 
 plt.rcParams['axes.linewidth'] = 1.5
@@ -12,48 +14,53 @@ plt.rcParams['font.size'] = 15
 rand = np.random.random
 
 @numba.njit
-def event(vax_rate : float = 0.8,
-          vax_eff : float = 0.66,
-          pos_frac : float = 0.01,
-          test_sensitivity : float = 0.8,
-          test_specifity : float = 0.97,
-          test_vax : bool = False,
-          test_unvax : bool = True,
-          N : int = 1_000,
-          bootstrap : int = 1_000
-         ):
+def event(
+        vax_rate : float = 0.8,
+        vax_eff : float = 0.66,
+        pos_frac : float = 0.01,
+        test_sensitivity : float = 0.8,
+        test_specifity : float = 0.97,
+        test_vax : bool = False,
+        test_unvax : bool = True,
+        N : int = 1_000,
+        runs : int = 1_000
+        ) -> tp.Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
-    Hold an event with 3G rules, and determine the number of infected people in attendance, 
-    the number of infected people rejected by the rules, 
-    and the number of not-infected people rejected by the rules
+    Hold an event for `N` people with 3G rules, and determine:
+
+        1. the number of infected people in attendance, 
+        2. the number of infected people rejected by the rules, 
+        3. the number of not-infected people rejected by the rules
     
-    The event is simulated by Monte Carlo, and the number of runs can be chosen by the `bootstrap` argument.
+    The event is simulated by Monte Carlo, and the number of runs can be chosen by the `runs` argument.
     
     To hold a 2G event, set `vax_rate` to 1.
     
     To hold a noG event, set `test_vax` and `test_unvax` to False
+
+    The vaccine efficacy can take negative values to account for waning vaccine efficacy / ADE
     
-    vax_rate: vaccination rate of the event (default=0.8)
-    vax_eff: Efficacy of the vaccine against infections (default=0.66)
-    pos_frac: Fraction of positive people in the visitors / prevalance (default=0.01)
-    test_sensitivity: Test sensitivity of the rapid antigen test (default=0.8)
-    test_specifity: Test specifity of the rapid antigen test (default=0.97)
-    test_vax: Boolean flag whether to test vaccinated visitors
-    test_unvax: Boolean flag whether to test unvaccinated visitors
-    N: Number of people for the event
-    bootstrap: Number of Monte Carlo runs
-    
-    Returns:
-    res_pos: Array of length `bootstrap` with the number of infected people in attendance
-    res_rej_pos: Array of length `bootstrap` with the number of infected people rejected by the rules
-    res_rej_neg: Array of length `bootstrap` with the number of not infected people rejected by the rules
+    @param vax_rate         Vaccination rate of the event (default=0.8)
+    @param vax_eff          Efficacy of the vaccine against infections (default=0.66)
+    @param pos_frac         Fraction of positive people in the visitors / prevalance (default=0.01)
+    @param test_sensitivity Test sensitivity of the rapid antigen test (default=0.8)
+    @param test_specifity   Test specifity of the rapid antigen test (default=0.97)
+    @param test_vax         Boolean flag whether to test vaccinated visitors
+    @param test_unvax       Boolean flag whether to test unvaccinated visitors
+    @param N                Number of people attending the event
+    @param runs             Number of Monte Carlo runs
+   
+    @return                 Tuple of np.ndarrays containing
+                                res_pos: Array of length `runs` with the number of infected people in attendance
+                                res_rej_pos: Array of length `runs` with the number of infected people rejected by the rules
+                                res_rej_neg: Array of length `runs` with the number of not infected people rejected by the rules
     """
     
-    res_pos = np.empty(bootstrap, dtype=np.uint32) # number of positives inside
-    res_rej_neg = np.empty(bootstrap, dtype=np.uint32) # number of positives rejected
-    res_rej_pos = np.empty(bootstrap, dtype=np.uint32) # number of negatives rejected
+    res_pos = np.empty(runs, dtype=np.uint32) # number of positives inside
+    res_rej_neg = np.empty(runs, dtype=np.uint32) # number of positives rejected
+    res_rej_pos = np.empty(runs, dtype=np.uint32) # number of negatives rejected
     
-    for i in numba.prange(bootstrap):
+    for i in numba.prange(runs):
         # counters
         num = 0 # number of people inside
         pos = 0 # number of positives inside
@@ -98,8 +105,14 @@ def event(vax_rate : float = 0.8,
     return res_pos, res_rej_pos, res_rej_neg
 
 
-
-def plot(vq=0.81, ve=0.66, p=1e-2, N=200, sens=0.8, spec=0.97):
+def plot(
+        vq : float = 0.81, 
+        ve : float = 0.66,
+        p : float = 1e-2,
+        N : int = 200,
+        sens : float = 0.8,
+        spec : float =0.97
+        ) -> matplotlib.figure:
 
     ev = event(vq, ve, p, sens, spec, False, True, N, 10_000)
     ev2 = event(vq, ve, p, sens, spec, True, True, N, 10_000)
@@ -122,11 +135,6 @@ def plot(vq=0.81, ve=0.66, p=1e-2, N=200, sens=0.8, spec=0.97):
         else:
             ax[i].hist(ev[i], bins=np.arange(ev[i].min()-4, ev[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'3G: {means_rej[(i-1)*2]:.2f}');
             ax[i].hist(ev2[i], bins=np.arange(ev2[i].min()-4, ev2[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'Alle testen: {means_rej[(i-1)*2+1]:.2f}');
-            #ax[i].hist(ev2[i], bins=np.arange(ev2[i].min()-4, ev2[i].max()+4, 1, dtype=int ), density=True, align='left', histtype='step', label=f'2G: {means[1]:.2f}');
-            #ax[i].hist(ev3[i], bins=np.arange(ev3[i].min()-4, ev3[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'NoG: {means[2]:.2f}');
-        #ax[i].set_title(f'{N} Studenten im Hörsaal bei Prävalenz von {p*100}%')
-        #ax[i].set_title(f'{N} Studenten im Hörsaal bei Prävalenz von {p*100}%')
-        ax[i]
         ax[i].legend()
 
 
