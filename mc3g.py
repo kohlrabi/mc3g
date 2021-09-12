@@ -106,7 +106,7 @@ def event(
 
 
 def plot(
-        vq : float = 0.81, 
+        vr : float = 0.81,
         ve : float = 0.66,
         p : float = 1e-2,
         N : int = 200,
@@ -115,10 +115,10 @@ def plot(
         runs : int = 10_000
         ) -> matplotlib.figure:
 
-    ev = event(vq, ve, p, sens, spec, False, True, N, runs)
-    ev2 = event(vq, ve, p, sens, spec, True, True, N, runs)
+    ev = event(vr, ve, p, sens, spec, False, True, N, runs)
+    ev2 = event(vr, ve, p, sens, spec, True, True, N, runs)
     ev3 = event(1., ve, p, sens, spec, False, True, N, runs)
-    ev4 = event(vq, ve, p, sens, spec, False, False, N, runs)
+    ev4 = event(vr, ve, p, sens, spec, False, False, N, runs)
 
     f, ax = plt.subplots(3, 1, figsize=(10,10))
 
