@@ -111,13 +111,14 @@ def plot(
         p : float = 1e-2,
         N : int = 200,
         sens : float = 0.8,
-        spec : float =0.97
+        spec : float =0.97,
+        runs : int = 10_000
         ) -> matplotlib.figure:
 
-    ev = event(vq, ve, p, sens, spec, False, True, N, 10_000)
-    ev2 = event(vq, ve, p, sens, spec, True, True, N, 10_000)
-    ev3 = event(1., ve, p, sens, spec, False, True, N, 10_000)
-    ev4 = event(vq, ve, p, sens, spec, False, False, N, 10_000)
+    ev = event(vq, ve, p, sens, spec, False, True, N, runs)
+    ev2 = event(vq, ve, p, sens, spec, True, True, N, runs)
+    ev3 = event(1., ve, p, sens, spec, False, True, N, runs)
+    ev4 = event(vq, ve, p, sens, spec, False, False, N, runs)
 
     f, ax = plt.subplots(3, 1, figsize=(10,10))
 
@@ -135,6 +136,7 @@ def plot(
         else:
             ax[i].hist(ev[i], bins=np.arange(ev[i].min()-4, ev[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'3G: {means_rej[(i-1)*2]:.2f}');
             ax[i].hist(ev2[i], bins=np.arange(ev2[i].min()-4, ev2[i].max()+4, 1, dtype=int), density=True, align='left', histtype='step', label=f'Alle testen: {means_rej[(i-1)*2+1]:.2f}');
+        ax[i].set_ylabel('rel. Häufigkeit')
         ax[i].legend()
 
 
