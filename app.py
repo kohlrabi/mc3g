@@ -1,6 +1,6 @@
 import streamlit as st
 import numpy as np
-from mc3g import plot
+from mc3g_plot import plot
 
 st.set_page_config(page_title="2G/3G Monte Carlo", initial_sidebar_state="expanded")
 st.title("2G/3G Monte Carlo")

@@ -2,7 +2,7 @@
 
 import matplotlib.pyplot as plt
 
-from mc3g import plot
+from mc3g_plot import plot
 
 
 vr = 0.8       # vaccine rate

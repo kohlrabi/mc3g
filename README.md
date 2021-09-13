@@ -25,7 +25,7 @@ You can deactivate the virtualenv by typing
 ## Usage
 In the virtualenv, you can either edit and run 
 
-    plot.py
+    main.py
 
 to create plots, or you can run 
 
