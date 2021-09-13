@@ -13,6 +13,10 @@ To enable the virtualenv, type
 
     . env/bin/activate
 
+First, you have to install `wheel` and upgrade `pip` itself
+
+    pip install wheel pip --upgrade
+
 Now you can install all dependencies:
 
     pip install -r requirements.txt
