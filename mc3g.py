@@ -106,12 +106,12 @@ def event(
 
 
 def plot(
-        vr : float = 0.81,
-        ve : float = 0.66,
+        vr : float = 0.8,
+        ve : float = 0.8,
         p : float = 1e-2,
-        N : int = 200,
+        N : int = 100,
         sens : float = 0.8,
-        spec : float =0.97,
+        spec : float = 0.97,
         runs : int = 10_000
         ) -> matplotlib.figure:
 
@@ -153,7 +153,7 @@ def plot(
 
 
     plt.tight_layout()
-    f.suptitle(f'{N:d} Personen, Prävalenz {p*100:.2f}%, \nImpfquote von {vr*100:.0f}%, Impfwirksamkeit von {ve*100:.0f}%')
+    f.suptitle(f'Personen: {N:d}, Prävalenz: {p*100:.2f}%, Test-Sensitivität: {sens*100:.2f}%,\nTest-Spezifität: {spec*100:.2f}%, Impfquote: {vr*100:.0f}%, Impfstoffwirksamkeit: {ve*100:.0f}%')
     f.subplots_adjust(top=0.88)
 
     return f
