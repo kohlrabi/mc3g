@@ -45,7 +45,7 @@ def plot(
             do_hist(ax[i], ev2[i], f'Alle testen: {means[1]:.2f}')
             do_hist(ax[i], ev3[i], f'2G: {means[2]:.2f}')
             do_hist(ax[i], ev4[i], f'noG: {means[3]:.2f}')
-            ax[i].set_xlabel('Anzahl Infizierter im Innenraum')
+            ax[i].set_xlabel('Anzahl eingelassener Infizierter')
             ax[i].set_ylabel('rel. Häufigkeit')
         else:
             do_hist(ax[i], ev[i], f'3G: {means_rej[(i-1)*2]:.2f}')
