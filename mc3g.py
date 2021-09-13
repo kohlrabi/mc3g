@@ -115,10 +115,11 @@ def plot(
         runs : int = 10_000
         ) -> matplotlib.figure:
 
-    ev = event(vr, ve, p, sens, spec, False, True, N, runs)
-    ev2 = event(vr, ve, p, sens, spec, True, True, N, runs)
-    ev3 = event(1., ve, p, sens, spec, False, True, N, runs)
-    ev4 = event(vr, ve, p, sens, spec, False, False, N, runs)
+    ev = event(vr, ve, p, sens, spec, False, True, N, runs) # 3G
+    ev2 = event(vr, ve, p, sens, spec, True, True, N, runs) # all tested
+    ev3 = event(1., ve, p, sens, spec, False, True, N, runs) # 2G
+    # calculate noG from 3G by adding the rejected infected
+    ev4 = ev[0] + ev[1], np.zeros_like(ev[1]), np.zeros_like(ev[2]) # noG
 
     f, ax = plt.subplots(3, 1, figsize=(10,10))
 
