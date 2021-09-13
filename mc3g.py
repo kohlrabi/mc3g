@@ -10,7 +10,7 @@ plt.rcParams['axes.linewidth'] = 1.5
 plt.rcParams['font.size'] = 15
 rand = np.random.random
 
-@numba.njit
+@numba.jit(nopython=True, parallel=True, nogil=True)
 def event(
         vax_rate : float = 0.8,
         vax_eff : float = 0.66,
