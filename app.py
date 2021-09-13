@@ -6,7 +6,7 @@ st.set_page_config(page_title="2G/3G Monte Carlo", initial_sidebar_state="expand
 st.title("2G/3G Monte Carlo")
 
 with st.sidebar.container():
-    N = st.sidebar.number_input("Anzahl Personen im Innenraum (Minimum: 0, Maximum: 10.000, Standard: 100):", 0, 10_000, 100, 1, format='%d')
+    N = st.sidebar.number_input("Anzahl Personen auf dem Event (Minimum: 0, Maximum: 10.000, Standard: 100):", 0, 10_000, 100, 1, format='%d')
     p = st.sidebar.number_input("Prävalenz (%) (Minimum: 0.01%, Maximum: 100%, Standard: 1.0%):", 1e-2, 100., 1., 1e-3, format='%.2f')
     sens = st.sidebar.number_input("Test-Sensitivität (%) (Minimum: 1%, Maximum: 100%, Standard: 80%):", 1., 100., 80., 1e-2, format='%.2f')
     spec = st.sidebar.number_input("Test-Spezifität (%) (Minimum: 1%, Maximum: 100%, Standard: 97%):", 1., 100., 97., 1e-2, format='%.2f')
