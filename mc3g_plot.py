@@ -49,7 +49,7 @@ def plot(
             ax[i].set_ylabel('rel. Häufigkeit')
         else:
             do_hist(ax[i], ev[i], f'3G: {means_rej[(i-1)*2]:.2f}')
-            do_hist(ax[i], ev2[i], f'Alle testen: {means_rej[(i-1)*2]:.2f}')
+            do_hist(ax[i], ev2[i], f'Alle testen: {means_rej[(i-1)*2+1]:.2f}')
 
 
     ax[0].set_title('Anzahl eingelassener Infizierter')
