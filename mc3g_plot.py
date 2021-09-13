@@ -52,12 +52,13 @@ def plot(
             do_hist(ax[i], ev2[i], f'Alle testen: {means_rej[(i-1)*2]:.2f}')
 
 
-    ax[0].set_title('Anzahl Infizierter im Innenraum')
-    ax[1].set_title('Anzahl abgelehnter Infizierter')
-    ax[2].set_title('Anzahl abgelehnter nicht-Infizierter')
+    ax[0].set_title('Anzahl eingelassener Infizierter')
 
-    ax[1].set_xlabel('Anzahl abgelehnter Infizierter')
-    ax[2].set_xlabel('Anzahl abgelehnter nicht-Infizierter')
+    ax[1].set_title('Anzahl abgewiesener Infizierter')
+    ax[1].set_xlabel('Anzahl abgewiesener Infizierter')
+    
+    ax[2].set_title('Anzahl abgewiesener nicht-Infizierter')
+    ax[2].set_xlabel('Anzahl abgewiesener nicht-Infizierter')
 
 
     plt.tight_layout()
