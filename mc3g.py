@@ -49,6 +49,10 @@ def event(
     """
     
     res_pos = np.empty(runs, dtype=np.uint32) # number of positives inside
+    res_pos_v = np.empty(runs, dtype=np.uint32) # number of vaxed positives inside
+    res_pos_u = np.empty(runs, dtype=np.uint32) # number of unvaxed positives inside
+    res_num_v = np.empty(runs, dtype=np.uint32) # number of vaxed inside
+    res_num_u = np.empty(runs, dtype=np.uint32) # number of unvaxed inside
     res_rej_neg = np.empty(runs, dtype=np.uint32) # number of positives rejected
     res_rej_pos = np.empty(runs, dtype=np.uint32) # number of negatives rejected
     
@@ -56,17 +60,24 @@ def event(
         # counters
         num = 0 # number of people inside
         pos = 0 # number of positives inside
+        pos_v = 0
+        pos_u = 0
+        num_v = 0
+        num_u = 0
         rej_pos = 0 # number of positives rejected
         rej_neg = 0 # number of negatives rejected
+        vaxed = False
 
         while num < N:
             # roll an vaxxed or unvaxxed person as long as event not full
             if rand() < vax_rate:
                 # vaxxed person
+                vaxed = True
                 is_positive = rand() < pos_frac * (1 - vax_eff)
                 tested = test_vax
             else:
                 # unvaxxed person
+                vaxed = False
                 is_positive = rand() < pos_frac
                 tested = test_unvax
                 
@@ -86,13 +97,22 @@ def event(
 
             if not test_positive:
                 # allow to enter when not tested positive
-                pos += is_positive
+                if vaxed == True:
+                    pos_v += is_positive
+                    num_v += 1
+                else:
+                    pos_u += is_positive
+                    num_u += 1
                 num += 1
         
         # tally counts
-        res_pos[i] = np.uint32(pos)
+        res_pos_v[i] = np.uint32(pos_v)
+        res_pos_u[i] = np.uint32(pos_u)
+        res_num_v[i] = np.uint32(num_v)
+        res_num_u[i] = np.uint32(num_u)
+        res_pos[i] = res_pos_v[i] + res_pos_u[i] 
         res_rej_pos[i] = np.uint32(rej_pos)
         res_rej_neg[i] = np.uint32(rej_neg)
         
-    return res_pos, res_rej_pos, res_rej_neg
+    return res_pos, res_rej_pos, res_rej_neg, res_pos_v, res_pos_u, res_num_v, res_num_u
 
