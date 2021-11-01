@@ -103,31 +103,31 @@ def plot_figures(
 
     #print(nv, pv, nu, pu)
 
+    f, ax = plt.subplots(2, 1, figsize=(10,10))
+
     r = np.zeros(N, dtype=int)
     r[nv:nv+pv] = 1
     r[nv+pv:nv+pv+nu] = 2
     r[nv+pv+nu:] = 3
 
-    while True:
-        try:
-            r = r.reshape(-1, cols)
-            break
-        except ValueError:
-            cols -= 1
+    if r.size != 0:
+        while True:
+            try:
+                r = r.reshape(-1, cols)
+                break
+            except ValueError:
+                cols -= 1
 
-
-    f, ax = plt.subplots(2, 1, figsize=(10,10))
-
-    for i in range(4):
-        x, y = np.where(r == i)
-        imscatter(x, -y, images[i], zoom=0.15, ax=ax[0])
-    
-    for i in range(4):
-        imscatter(0.15 + 0.2 * i, 0.95, images[i], zoom=0.15, ax=ax[0], boxcoords=ax[0].transAxes)
-        n = (r == i).sum()
-        ax[0].text(0.17 + 0.2 * i, 0.93, f': {n}', transform=ax[0].transAxes)
-    yl = ax[0].get_ylim()
-    ax[0].set_ylim(yl[0], yl[1] - (yl[1]-y[0]) * 0.2)
+        for i in range(4):
+            x, y = np.where(r == i)
+            imscatter(x, -y, images[i], zoom=0.15, ax=ax[0])
+        
+        for i in range(4):
+            imscatter(0.15 + 0.2 * i, 0.95, images[i], zoom=0.15, ax=ax[0], boxcoords=ax[0].transAxes)
+            n = (r == i).sum()
+            ax[0].text(0.17 + 0.2 * i, 0.93, f': {n}', transform=ax[0].transAxes)
+        yl = ax[0].get_ylim()
+        ax[0].set_ylim(yl[0], yl[1] - (yl[1]-y[0]) * 0.2)
 
     r = np.zeros(rej_pos + rej_neg, dtype=int)
     r[:rej_neg] = 2
