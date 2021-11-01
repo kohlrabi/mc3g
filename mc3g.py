@@ -1,11 +1,9 @@
-import numba
 import numpy as np
 import typing as tp
 
 
 rand = np.random.random
 
-@numba.jit(nopython=True, parallel=True, nogil=True)
 def event(
         vax_rate : float = 0.8,
         vax_eff : float = 0.66,
@@ -15,7 +13,7 @@ def event(
         test_vax : bool = False,
         test_unvax : bool = True,
         N : int = 1_000,
-        runs : int = 1_000
+        runs : int = 1_0
         ) -> tp.Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     Hold an event for `N` people with 3G rules, and determine:
@@ -56,7 +54,7 @@ def event(
     res_rej_neg = np.empty(runs, dtype=np.uint32) # number of positives rejected
     res_rej_pos = np.empty(runs, dtype=np.uint32) # number of negatives rejected
     
-    for i in numba.prange(runs):
+    for i in range(runs):
         # counters
         num = 0 # number of people inside
         pos = 0 # number of positives inside
