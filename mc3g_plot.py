@@ -153,7 +153,7 @@ def plot_figures(
     ax[1].set_xlim(ax[0].get_xlim())
     ax[1].set_ylim(ax[0].get_ylim())
 
-    plt.show()
+    return f
 
 def imscatter(x, y, image, ax=None, zoom=1, *args, **kwargs):
     if ax is None:

@@ -1,6 +1,6 @@
 import streamlit as st
 import numpy as np
-from mc3g_plot import plot
+from mc3g_plot import plot, plot_figures
 
 st.set_page_config(page_title="2G/3G Monte Carlo", initial_sidebar_state="expanded")
 st.title("2G/3G Monte Carlo")
@@ -13,5 +13,5 @@ with st.sidebar.container():
     ve = st.sidebar.number_input("Impfstoffwirksamkeit (%) (Minimum: -100%, Maximum: 100%, Standard 80%):", -100., 100., 80., 1e-2, format='%.2f')
     vr = st.sidebar.number_input("Impfquote (%) (Minimum: 0%, Maximum: 100%, Standard: 80%):", 0., 100., 80., 1e-2, format='%.2f')
 
-fig = plot(vr/100, ve/100, p/100., N, sens/100, spec/100)
+fig = plot_figures(vr/100, ve/100, p/100., N, sens/100, spec/100)
 st.pyplot(fig)
