@@ -128,6 +128,10 @@ def plot_figures(
             ax[0].text(0.17 + 0.2 * i, 0.93, f': {n}', transform=ax[0].transAxes)
         yl = ax[0].get_ylim()
         ax[0].set_ylim(yl[0], yl[1] - (yl[1]-y[0]) * 0.2)
+    ax[0].set_xticklabels([])
+    ax[0].set_yticklabels([])
+    ax[0].set_xticks([])
+    ax[0].set_yticks([])
 
     r = np.zeros(rej_pos + rej_neg, dtype=int)
     r[:rej_neg] = 2
@@ -152,6 +156,10 @@ def plot_figures(
             ax[1].text(0.17 + 0.2 * i, 0.93, f': {n}', transform=ax[1].transAxes)
     ax[1].set_xlim(ax[0].get_xlim())
     ax[1].set_ylim(ax[0].get_ylim())
+    ax[1].set_xticklabels([])
+    ax[1].set_yticklabels([])
+    ax[1].set_xticks([])
+    ax[1].set_yticks([])
 
     return f
 
